@@ -12,7 +12,7 @@ WhatsApp E-Commerce Bot using FastAPI, SQLite, Redis, and Anthropic Claude API.
 
 ## Code Style Guidelines
 - **Imports**: Stdlib first, then third-party, then local modules; alphabetically sorted within groups
-- **Formatting**: 4 spaces indentation, 88 character line limit
+- **Formatting**: Tab indentation, 88 character line limit
 - **Types**: Type annotations required for all function parameters and return values
 - **Naming**: 
   - snake_case for variables/functions

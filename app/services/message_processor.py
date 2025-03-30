@@ -11,44 +11,44 @@ llm_client = LLMClient()
 twilio_adapter = TwilioWhatsAppAdapter()
 
 async def process_message(message: Dict[str, Any]) -> None:
-    """Process an incoming message from the queue"""
-    # Extract user information
-    phone_number = message.get('phone_number')
-    content = message.get('content', '')
-    
-    if not phone_number or not content:
-        return
-    
-    # Get or create user
-    user = await User.create_or_update(phone_number)
-    
-    # Get active conversation or create a new one
-    conversation = await Conversation.get_active_for_user(phone_number)
-    if not conversation:
-        conversation = await Conversation.create(phone_number)
-    
-    # Add user message to conversation
-    await conversation.add_message('user', content)
-    
-    # Get recent conversation messages for context
-    messages = await conversation.get_messages()
-    
-    # Generate response using LLM
-    response = await llm_client.generate_response(messages, conversation.context)
-    
-    # Add assistant message to conversation
-    await conversation.add_message('assistant', response['content'])
-    
-    # Check for function calls and execute them
-    if 'function_calls' in response:
-        # Process function calls here
-        # For now this is just a placeholder
-        pass
-    
-    # Update conversation context if needed
-    if response.get('updated_context'):
-        conversation.context = json.dumps(response['updated_context'])
-        await conversation.update()
-    
-    # Send response back to user
-    await twilio_adapter.send_message(phone_number, response['content'])
+	"""Process an incoming message from the queue"""
+	# Extract user information
+	phone_number = message.get('phone_number')
+	content = message.get('content', '')
+	
+	if not phone_number or not content:
+		return
+	
+	# Get or create user
+	user = await User.create_or_update(phone_number)
+	
+	# Get active conversation or create a new one
+	conversation = await Conversation.get_active_for_user(phone_number)
+	if not conversation:
+		conversation = await Conversation.create(phone_number)
+	
+	# Add user message to conversation
+	await conversation.add_message('user', content)
+	
+	# Get recent conversation messages for context
+	messages = await conversation.get_messages()
+	
+	# Generate response using LLM
+	response = await llm_client.generate_response(messages, conversation.context)
+	
+	# Add assistant message to conversation
+	await conversation.add_message('assistant', response['content'])
+	
+	# Check for function calls and execute them
+	if 'function_calls' in response:
+		# Process function calls here
+		# For now this is just a placeholder
+		pass
+	
+	# Update conversation context if needed
+	if response.get('updated_context'):
+		conversation.context = json.dumps(response['updated_context'])
+		await conversation.update()
+	
+	# Send response back to user
+	await twilio_adapter.send_message(phone_number, response['content'])
