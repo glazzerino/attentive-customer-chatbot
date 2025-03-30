@@ -1,5 +1,5 @@
-import os
 from typing import Dict, Any, Optional
+from dotenv import dotenv_values
 
 from twilio.rest import Client
 from twilio.request_validator import RequestValidator
@@ -10,9 +10,10 @@ class TwilioWhatsAppAdapter(MessagingPlatform):
 	"""Twilio WhatsApp messaging platform adapter."""
 	
 	def __init__(self):
-		self.account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-		self.auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-		self.from_number = os.getenv("TWILIO_PHONE_NUMBER")
+		config = dotenv_values()
+		self.account_sid = config.get("TWILIO_ACCOUNT_SID")
+		self.auth_token = config.get("TWILIO_AUTH_TOKEN")
+		self.from_number = config.get("TWILIO_PHONE_NUMBER")
 		
 		if not all([self.account_sid, self.auth_token, self.from_number]):
 			raise ValueError("Twilio credentials not properly configured. Check environment variables.")

@@ -1,18 +1,28 @@
-import os
 import sqlite3
 from typing import Dict, Any, List, Optional
+from dotenv import dotenv_values
 
 class Database:
 	"""SQLite database connection manager"""
 	
 	def __init__(self, db_path: str = None):
-		self.db_path = db_path or os.getenv("DATABASE_PATH", "ecommerce_bot.db")
+		config = dotenv_values()
+		self.db_path = db_path or config.get("DATABASE_PATH")
+		if not self.db_path:
+			# Default to local file in project root if not specified
+			self.db_path = "ecommerce_bot.db"
 		self.conn = None
 		self.create_tables()
 	
 	def get_connection(self):
 		"""Get a database connection"""
 		if self.conn is None:
+			# Ensure parent directory exists
+			import os
+			parent_dir = os.path.dirname(self.db_path)
+			if parent_dir and not os.path.exists(parent_dir):
+				os.makedirs(parent_dir, exist_ok=True)
+				
 			self.conn = sqlite3.connect(self.db_path)
 			self.conn.row_factory = sqlite3.Row
 		return self.conn

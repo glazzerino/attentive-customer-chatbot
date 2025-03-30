@@ -1,12 +1,13 @@
-import os
 import json
 from typing import Dict, Any, List, Optional
+from dotenv import dotenv_values
 
 class LLMClient:
 	"""Client for interacting with the LLM API (Anthropic Claude)"""
 	
 	def __init__(self):
-		self.api_key = os.getenv("ANTHROPIC_API_KEY")
+		config = dotenv_values()
+		self.api_key = config.get("ANTHROPIC_API_KEY")
 		if not self.api_key:
 			raise ValueError("ANTHROPIC_API_KEY environment variable not set")
 	
