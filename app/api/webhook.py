@@ -21,11 +21,11 @@ async def whatsapp_webhook(
     # Get request data
     form_data = await request.form()
     request_data = dict(form_data)
+    # Get full URL for validation
+    url = str(request.url)
 
-    # Validate webhook signature
-    # Add URL to request_data since we modified the validate_webhook method signature
-    request_data["url"] = str(request.url)
-    if not await twilio_adapter.validate_webhook(request_data, x_twilio_signature):
+    # Validate webhook signature - note we're passing url separately
+    if not await twilio_adapter.validate_webhook(url, request_data, x_twilio_signature):
         raise HTTPException(status_code=401, detail="Invalid signature")
 
     # Parse incoming message

@@ -84,15 +84,15 @@ class Product:
             (product_id,),
         )
 
-        categories = [row["category"] for row in cursor.fetchall()]
+        categories = [row['category'] for row in cursor.fetchall()]
 
         return Product(
-            id=product_data["id"],
-            name=product_data["name"],
-            description=product_data["description"],
-            price=product_data["price"],
-            image_url=product_data["image_url"],
-            in_stock=bool(product_data["in_stock"]),
+            id=product_data['id'],
+            name=product_data['name'],
+            description=product_data['description'],
+            price=product_data['price'],
+            image_url=product_data['image_url'],
+            in_stock=bool(product_data['in_stock']),
             categories=categories,
         )
 
@@ -131,18 +131,18 @@ class Product:
             # Get categories for this product
             cursor.execute(
                 "SELECT category FROM product_categories WHERE product_id = ?",
-                (row["id"],),
+                (row['id'],),
             )
-            categories = [cat_row["category"] for cat_row in cursor.fetchall()]
+            categories = [cat_row['category'] for cat_row in cursor.fetchall()]
 
             products.append(
                 Product(
-                    id=row["id"],
-                    name=row["name"],
-                    description=row["description"],
-                    price=row["price"],
-                    image_url=row["image_url"],
-                    in_stock=bool(row["in_stock"]),
+                    id=row['id'],
+                    name=row['name'],
+                    description=row['description'],
+                    price=row['price'],
+                    image_url=row['image_url'],
+                    in_stock=bool(row['in_stock']),
                     categories=categories,
                 )
             )

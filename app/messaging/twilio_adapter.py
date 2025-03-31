@@ -25,11 +25,11 @@ class TwilioWhatsAppAdapter(MessagingPlatform):
         self.validator = RequestValidator(self.auth_token)
 
     async def validate_webhook(
-        self, request_data: Dict[str, Any], signature: Optional[str]
+        self, url: str, request_data: Dict[str, Any], signature: Optional[str]
     ) -> bool:
         """Validate incoming webhook request signature"""
-        # Get the URL from the request data or use a default
-        url = request_data.get("url", "")
+        if not signature:
+            return False
         return self.validator.validate(url, request_data, signature)
 
     async def parse_message(self, request_data: Dict[str, Any]) -> Dict[str, Any]:

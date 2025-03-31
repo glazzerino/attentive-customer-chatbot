@@ -146,12 +146,12 @@ class Order:
 
         # Create order
         order = Order(
-            id=order_data["id"],
-            user_id=order_data["user_id"],
-            total_amount=order_data["total_amount"],
-            status=order_data["status"],
-            created_at=datetime.fromisoformat(order_data["created_at"]),
-            updated_at=datetime.fromisoformat(order_data["updated_at"]),
+            id=order_data['id'],
+            user_id=order_data['user_id'],
+            total_amount=order_data['total_amount'],
+            status=order_data['status'],
+            created_at=datetime.fromisoformat(order_data['created_at']),
+            updated_at=datetime.fromisoformat(order_data['updated_at']),
         )
 
         # Get order items
@@ -160,11 +160,11 @@ class Order:
         items = []
         for row in cursor.fetchall():
             item = OrderItem(
-                id=row["id"],
+                id=row['id'],
                 order_id=order_id,
-                product_id=row["product_id"],
-                quantity=row["quantity"],
-                unit_price=row["unit_price"],
+                product_id=row['product_id'],
+                quantity=row['quantity'],
+                unit_price=row['unit_price'],
             )
             # Load the product
             await item.get_product()
@@ -191,12 +191,12 @@ class Order:
         orders = []
         for row in cursor.fetchall():
             order = Order(
-                id=row["id"],
-                user_id=row["user_id"],
-                total_amount=row["total_amount"],
-                status=row["status"],
-                created_at=datetime.fromisoformat(row["created_at"]),
-                updated_at=datetime.fromisoformat(row["updated_at"]),
+                id=row['id'],
+                user_id=row['user_id'],
+                total_amount=row['total_amount'],
+                status=row['status'],
+                created_at=datetime.fromisoformat(row['created_at']),
+                updated_at=datetime.fromisoformat(row['updated_at']),
             )
             # Load order items
             cursor.execute("SELECT * FROM order_items WHERE order_id = ?", (order.id,))
@@ -204,11 +204,11 @@ class Order:
             items = []
             for item_row in cursor.fetchall():
                 item = OrderItem(
-                    id=item_row["id"],
+                    id=item_row['id'],
                     order_id=order.id,
-                    product_id=item_row["product_id"],
-                    quantity=item_row["quantity"],
-                    unit_price=item_row["unit_price"],
+                    product_id=item_row['product_id'],
+                    quantity=item_row['quantity'],
+                    unit_price=item_row['unit_price'],
                 )
                 items.append(item)
 

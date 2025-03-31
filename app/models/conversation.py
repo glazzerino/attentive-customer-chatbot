@@ -67,12 +67,12 @@ class Conversation:
             return None
 
         return Conversation(
-            id=conversation_data["id"],
-            user_id=conversation_data["user_id"],
-            context=conversation_data["context"],
-            active_product_id=conversation_data["active_product_id"],
-            created_at=datetime.fromisoformat(conversation_data["created_at"]),
-            updated_at=datetime.fromisoformat(conversation_data["updated_at"]),
+            id=conversation_data['id'],
+            user_id=conversation_data['user_id'],
+            context=conversation_data['context'],
+            active_product_id=conversation_data['active_product_id'],
+            created_at=datetime.fromisoformat(conversation_data['created_at']),
+            updated_at=datetime.fromisoformat(conversation_data['updated_at']),
         )
 
     @classmethod
@@ -87,10 +87,10 @@ class Conversation:
         )
 
         result = cursor.fetchone()
-        if not result or not result["active_conversation_id"]:
+        if not result or not result['active_conversation_id']:
             return None
 
-        return await cls.get_by_id(result["active_conversation_id"])
+        return await cls.get_by_id(result['active_conversation_id'])
 
     async def update(self) -> None:
         """Update the conversation in the database"""

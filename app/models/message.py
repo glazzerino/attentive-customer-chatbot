@@ -115,25 +115,25 @@ class Message:
         raw_data = {}
 
         try:
-            if message_data.get("metadata"):
-                metadata = json.loads(message_data["metadata"])
-            if message_data.get("raw_data"):
-                raw_data = json.loads(message_data["raw_data"])
+            if 'metadata' in message_data and message_data['metadata']:
+                metadata = json.loads(message_data['metadata'])
+            if 'raw_data' in message_data and message_data['raw_data']:
+                raw_data = json.loads(message_data['raw_data'])
         except json.JSONDecodeError:
             pass
 
         return Message(
-            id=message_data["id"],
-            conversation_id=message_data["conversation_id"],
-            role=message_data["role"],
-            content=message_data["content"],
-            phone_number=message_data.get("phone_number"),
-            media_url=message_data.get("media_url"),
-            message_type=message_data.get("message_type", "text"),
-            platform=message_data.get("platform", "whatsapp"),
+            id=message_data['id'],
+            conversation_id=message_data['conversation_id'],
+            role=message_data['role'],
+            content=message_data['content'],
+            phone_number=message_data['phone_number'] if 'phone_number' in message_data else None,
+            media_url=message_data['media_url'] if 'media_url' in message_data else None,
+            message_type=message_data['message_type'] if 'message_type' in message_data else 'text',
+            platform=message_data['platform'] if 'platform' in message_data else 'whatsapp',
             metadata=metadata,
             raw_data=raw_data,
-            timestamp=datetime.fromisoformat(message_data["timestamp"]),
+            timestamp=datetime.fromisoformat(message_data['timestamp']),
         )
 
     @classmethod
@@ -155,26 +155,26 @@ class Message:
             raw_data = {}
 
             try:
-                if row.get("metadata"):
-                    metadata = json.loads(row["metadata"])
-                if row.get("raw_data"):
-                    raw_data = json.loads(row["raw_data"])
+                if 'metadata' in row and row['metadata']:
+                    metadata = json.loads(row['metadata'])
+                if 'raw_data' in row and row['raw_data']:
+                    raw_data = json.loads(row['raw_data'])
             except json.JSONDecodeError:
                 pass
 
             messages.append(
                 Message(
-                    id=row["id"],
-                    conversation_id=row["conversation_id"],
-                    role=row["role"],
-                    content=row["content"],
-                    phone_number=row.get("phone_number"),
-                    media_url=row.get("media_url"),
-                    message_type=row.get("message_type", "text"),
-                    platform=row.get("platform", "whatsapp"),
+                    id=row['id'],
+                    conversation_id=row['conversation_id'],
+                    role=row['role'],
+                    content=row['content'],
+                    phone_number=row['phone_number'] if 'phone_number' in row else None,
+                    media_url=row['media_url'] if 'media_url' in row else None,
+                    message_type=row['message_type'] if 'message_type' in row else 'text',
+                    platform=row['platform'] if 'platform' in row else 'whatsapp',
                     metadata=metadata,
                     raw_data=raw_data,
-                    timestamp=datetime.fromisoformat(row["timestamp"]),
+                    timestamp=datetime.fromisoformat(row['timestamp']),
                 )
             )
 

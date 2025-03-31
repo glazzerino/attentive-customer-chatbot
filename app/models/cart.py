@@ -51,10 +51,10 @@ class Cart:
         items = []
         for row in cursor.fetchall():
             item = CartItem(
-                id=row["id"],
-                conversation_id=row["conversation_id"],
-                product_id=row["product_id"],
-                quantity=row["quantity"],
+                id=row['id'],
+                conversation_id=row['conversation_id'],
+                product_id=row['product_id'],
+                quantity=row['quantity'],
             )
             # Load the product
             await item.get_product()
@@ -85,14 +85,14 @@ class Cart:
 
         if existing_item:
             # Update quantity
-            new_quantity = existing_item["quantity"] + quantity
+            new_quantity = existing_item['quantity'] + quantity
             cursor.execute(
                 "UPDATE cart_items SET quantity = ? WHERE id = ?",
-                (new_quantity, existing_item["id"]),
+                (new_quantity, existing_item['id']),
             )
 
             item = CartItem(
-                id=existing_item["id"],
+                id=existing_item['id'],
                 conversation_id=conversation_id,
                 product_id=product_id,
                 quantity=new_quantity,
@@ -135,17 +135,17 @@ class Cart:
         if not existing_item:
             return False
 
-        if quantity is None or quantity >= existing_item["quantity"]:
+        if quantity is None or quantity >= existing_item['quantity']:
             # Remove item completely
             cursor.execute(
-                "DELETE FROM cart_items WHERE id = ?", (existing_item["id"],)
+                "DELETE FROM cart_items WHERE id = ?", (existing_item['id'],)
             )
         else:
             # Decrease quantity
-            new_quantity = existing_item["quantity"] - quantity
+            new_quantity = existing_item['quantity'] - quantity
             cursor.execute(
                 "UPDATE cart_items SET quantity = ? WHERE id = ?",
-                (new_quantity, existing_item["id"]),
+                (new_quantity, existing_item['id']),
             )
 
         conn.commit()

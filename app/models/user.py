@@ -35,11 +35,11 @@ class User:
             return None
 
         return User(
-            phone_number=user_data["phone_number"],
-            name=user_data["name"],
-            created_at=datetime.fromisoformat(user_data["created_at"]),
-            last_interaction=datetime.fromisoformat(user_data["last_interaction"]),
-            active_conversation_id=user_data["active_conversation_id"],
+            phone_number=user_data['phone_number'],
+            name=user_data['name'],
+            created_at=datetime.fromisoformat(user_data['created_at']),
+            last_interaction=datetime.fromisoformat(user_data['last_interaction']),
+            active_conversation_id=user_data['active_conversation_id'],
         )
 
     @classmethod

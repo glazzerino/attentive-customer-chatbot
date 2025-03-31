@@ -26,6 +26,7 @@ class Database:
                 os.makedirs(parent_dir, exist_ok=True)
 
             self.conn = sqlite3.connect(self.db_path)
+            # SQLite row_factory allows dictionary-style access with row['column_name']
             self.conn.row_factory = sqlite3.Row
         return self.conn
 
