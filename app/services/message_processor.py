@@ -1,14 +1,16 @@
 import json
 from typing import Dict, Any, List, Optional, Union
 
+from anthropic import Anthropic
+
 from app.models.user import User
 from app.models.conversation import Conversation
 from app.models.message import Message
-from app.services.llm_client import LLMClient
+from app.services.llm_client import AnthropicClient
 from app.messaging.twilio_adapter import TwilioWhatsAppAdapter
 
 # Initialize the LLM client and messaging adapter
-llm_client = LLMClient()
+llm_client = AnthropicClient()
 twilio_adapter = TwilioWhatsAppAdapter()
 
 
